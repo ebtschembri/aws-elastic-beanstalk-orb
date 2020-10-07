@@ -1,6 +1,6 @@
 
 InstallEBCLI() {
-    cd /tmp
+    cd /tmp || { echo "Not able to access /tmp"; return; }
     git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
 
     if uname -a | grep Darwin > /dev/null 2>&1; then
@@ -13,8 +13,8 @@ InstallEBCLI() {
         ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer
     fi
 
-    echo 'export PATH="~/.ebcli-virtual-env/executables:$PATH"'  >> $BASH_ENV
-    . $BASH_ENV
+    echo 'export PATH="~/.ebcli-virtual-env/executables:$PATH"'  >> "$BASH_ENV"
+    . "$BASH_ENV"
 }
 
 CheckAWSEnvVars() {
