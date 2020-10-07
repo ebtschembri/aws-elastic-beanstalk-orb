@@ -1,0 +1,8 @@
+description: >
+  Install and authenticate with the Elastic Beanstalk CLI.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+steps:
+  - run:
+      name: Setting Up Elastic Beanstalk CLI
+      command: <<include(scripts/install-setup.sh)>>
