@@ -8,12 +8,12 @@ InstallEBCLI() {
 
     if uname -a | grep Darwin > /dev/null 2>&1; then
         brew install zlib openssl readline
-        $SUDO CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer
+        $SUDO CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
         return $?
     elif uname -a | grep Linux > /dev/null 2>&1; then
         $SUDO apt-get -qq update > /dev/null
         $SUDO apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
-        $SUDO ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer
+        $SUDO ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
     fi
 
     echo 'export PATH="~/.ebcli-virtual-env/executables:$PATH"'  >> "$BASH_ENV"
