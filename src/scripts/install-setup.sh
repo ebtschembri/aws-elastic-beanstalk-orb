@@ -18,7 +18,7 @@ InstallEBCLI() {
 }
 
 CheckAWSEnvVars() {
-    ERRMSGTEXT=" has not been set. This environment variable is required for authentication."
+    ERRMSGTEXT="has not been set. This environment variable is required for authentication."
     if [ -z "$AWS_ACCESS_KEY_ID" ]; then
         echo "AWS_ACCESS_KEY_ID $ERRMSGTEXT"
         exit 1
