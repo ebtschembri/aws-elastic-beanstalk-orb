@@ -13,7 +13,7 @@ InstallEBCLI() {
     elif uname -a | grep Linux > /dev/null 2>&1; then
         $SUDO apt-get -qq update > /dev/null
         $SUDO apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
-        $SUDO ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
+        $SUDO ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer # >/dev/null 2>&1
     fi
     echo 'export PATH=/root/.pyenv/versions/3.7.2/bin:$PATH' >> "$BASH_ENV"
     echo 'export PATH="~/.ebcli-virtual-env/executables:$PATH"'  >> "$BASH_ENV"
