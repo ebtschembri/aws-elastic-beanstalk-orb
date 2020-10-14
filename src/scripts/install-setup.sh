@@ -42,7 +42,7 @@ InstallEBCLI() {
         fi
     fi
         python3 aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
-        echo 'export PATH="/home/circleci/.ebcli-virtual-env/executables:$PATH"' >> $BASH_ENV
+        echo 'export PATH="/home/circleci/.ebcli-virtual-env/executables:$PATH"' >> "$BASH_ENV"
 }
 
 CheckAWSEnvVars() {
