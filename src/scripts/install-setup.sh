@@ -11,8 +11,7 @@ SetupPython() {
     SetupVirtualEnv
 }
 
-# SetupVirtualEnv() {
-SetupPipx() {
+SetupVirtualEnv() {
     if [ "$(which pip | tail -1)" ]; then
         echo "pip found"
     else
