@@ -13,7 +13,7 @@ InstallEBCLI() {
     elif uname -a | grep Linux > /dev/null 2>&1; then
         apt-get -qq update > /dev/null
         apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
-        python3 -m pip install pipx
+        pip install pipx
         pipx install awsebcli
     fi
 }
