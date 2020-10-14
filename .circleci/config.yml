@@ -22,11 +22,24 @@ parameters:
     type: string
     default: "dev:alpha"
 
+executors:
+  python:
+    docker:
+      - image: cimg/python:3.9
+  base:
+    docker:
+      - image: cimg/base:stable
+
+
 jobs:
   # Define one or more jobs which will utilize your orb's commands and parameters to validate your changes.
   integration-test-1:
-    docker:
-      - image: cimg/base:stable
+    parameters:
+      compute:
+        description: What executor to use for the job
+        type: executor
+        default:
+    executor: <<parameters.compute>>
     steps:
       - checkout
       # "greet" is a sample command packaged with this orb config.
@@ -85,6 +98,9 @@ workflows:
       # Run any integration tests defined within the `jobs` key.
       - integration-test-1:
           context: [orb-aws-eb-testing]
+          matrix:
+              parameters:
+                compute: [python, base]
       # Publish a semver version of the orb. relies on
       # the commit subject containing the text "[semver:patch|minor|major|skip]"
       # as that will determine whether a patch, minor or major

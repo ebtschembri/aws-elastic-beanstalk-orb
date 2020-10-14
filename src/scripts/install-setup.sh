@@ -2,23 +2,47 @@ if [[ $EUID == 0 ]]; then export SUDO=""; else # Check if we are root
   export SUDO="sudo";
 fi
 
+SetupPython() {
+    # setups pyenv on a debian based system
+    # these are the system level deps for pyevn install, these are offically recommneded for install by AWS
+    $SUDO apt-get -qq update > /dev/null
+    $SUDO apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
+    $SUDO apt-get -qq -y install python3-dev
+    SetupVirtualEnv
+}
+
+SetupVirtualEnv() {
+    if [ "$(which pip | tail -1)" ]; then
+        echo "pip found"
+    else
+        echo VirtualEnv"pip not found"
+        $SUDO apt-get update
+        $SUDO apt-get install python3-setuptools
+        curl https://bootstrap.pypa.io/get-pip.py | python3
+    fi
+    pip install virtualenv
+}
+
+
+
 InstallEBCLI() {
     cd /tmp || { echo "Not able to access /tmp"; return; }
     git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
-
     if uname -a | grep Darwin > /dev/null 2>&1; then
         brew install zlib openssl readline
         CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
         return $?
     elif uname -a | grep Linux > /dev/null 2>&1; then
-        apt-get -qq update > /dev/null
-        apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
-        ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
-        echo "The install script has completed"
+        if [ "$(which python3 | tail -1)" ]; then
+            echo "Python3 env found"
+            SetupVirtualEnv
+        else
+            echo "Python3 env not found, setting up python 3.7.9 with pyenv"
+            SetupPython
+        fi
     fi
-    echo 'export PATH=/root/.pyenv/versions/3.7.2/bin:$PATH' >> "$BASH_ENV"
-    echo 'export PATH="~/.ebcli-virtual-env/executables:$PATH"'  >> "$BASH_ENV"
-    . "$BASH_ENV"
+        python3 aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
+        echo 'export PATH="/home/circleci/.ebcli-virtual-env/executables:$PATH"' >> "$BASH_ENV"
 }
 
 CheckAWSEnvVars() {
