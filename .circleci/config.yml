@@ -39,7 +39,7 @@ jobs:
         description: What executor to use for the job
         type: executor
         default:
-    executor: <<parameter.compute>>
+    executor: <<parameters.compute>>
     steps:
       - checkout
       # "greet" is a sample command packaged with this orb config.
