@@ -16,7 +16,7 @@ SetupVirtualEnv() {
         echo "pip found"
     else
         echo "pip not found"
-        $SUDO curl https://bootstrap.pypa.io/get-pip.py | python3
+        curl https://bootstrap.pypa.io/get-pip.py | python3
     fi
     pip install virtualenv
 }
