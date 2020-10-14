@@ -11,11 +11,14 @@ SetupPython() {
     SetupVirtualEnv
 }
 
-SetupVirtualEnv() {
+# SetupVirtualEnv() {
+SetupPipx() {
     if [ "$(which pip | tail -1)" ]; then
         echo "pip found"
     else
-        echo "pip not found"
+        echo VirtualEnv"pip not found"
+        $SUDO apt-get update
+        $SUDO apt-get install python3-setuptools
         curl https://bootstrap.pypa.io/get-pip.py | python3
     fi
     pip install virtualenv
@@ -39,7 +42,7 @@ InstallEBCLI() {
             SetupPython
         fi
     fi
-            python3 aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
+        python3 aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
 }
 
 CheckAWSEnvVars() {
