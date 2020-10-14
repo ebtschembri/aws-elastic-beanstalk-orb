@@ -30,7 +30,7 @@ InstallEBCLI() {
     git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
     if uname -a | grep Darwin > /dev/null 2>&1; then
         brew install zlib openssl readline
-        $SUDO CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
+        CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
         return $?
     elif uname -a | grep Linux > /dev/null 2>&1; then
         if [ "$(which python3 | tail -1)" ]; then
