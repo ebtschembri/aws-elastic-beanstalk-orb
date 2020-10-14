@@ -12,7 +12,7 @@ SetupPython() {
 }
 
 SetupVirtualEnv() {
-    if [ $(which pip | tail -1) ]; then
+    if [ "$(which pip | tail -1)" ]; then
         echo "pip found"
     else
         echo "pip not found"
@@ -31,8 +31,7 @@ InstallEBCLI() {
         $SUDO CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
         return $?
     elif uname -a | grep Linux > /dev/null 2>&1; then
-        PY=
-        if [ $(which python3 | tail -1) ]; then
+        if [ "$(which python3 | tail -1)" ]; then
             echo "Python3 env found"
             SetupVirtualEnv
         else
