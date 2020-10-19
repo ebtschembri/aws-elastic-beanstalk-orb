@@ -1,0 +1,37 @@
+description: >
+  Deploy an update to an existing AWS Elastic Beanstalk environment.
+
+parameters:
+  environment-name:
+    description: The name of the existing environment (created with `eb create`) to update.
+    type: string
+    default: ""
+  image:
+    description: Enter a custom docker image for this job. By default CircleCI's `cimg/base` image will be used.
+    type: string
+    default: "cimg/base:stable"
+  label:
+    description: pecify a label to use for the version that the EB CLI creates. If the label has already been used, the EB CLI redeploys the previous version with that label.
+    type: string
+    default: ""
+  description:
+    description: The description for the application version, enclosed in double quotation marks.
+    type: string
+    default: ""
+  app-dir:
+    type: string
+    default: "."
+    description: Path to the directory containing your application source code. My default, the current directory will be used.
+
+
+docker:
+  - image: <<parameters.image>>
+
+steps:
+  - checkout
+  - setup
+  - run:
+      name: EB Deploy
+      working_directory: <<parameters.app-dir>>
+      command: |
+        eb deploy <<parameters.environment-name>> <<#parameters.label>>-l <<parameters.label>><</parameters.label>> <<#parameters.description>>-m <<parameters.description>><</parameters.description>> 

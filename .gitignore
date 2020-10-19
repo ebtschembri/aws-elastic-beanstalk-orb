@@ -2,4 +2,3 @@
 orb.yml
 node_modules/
 .gitignore
-.elasticbeanstalk/
