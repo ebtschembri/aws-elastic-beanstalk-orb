@@ -60,7 +60,7 @@ jobs:
           name: EB Create
           command: |
             cd sample_app
-            eb init -r $AWS_DEFAULT_REGION
+            eb init sample_app -r $AWS_DEFAULT_REGION -p Node.js
             eb create eb-orb-testing
 
 workflows:
