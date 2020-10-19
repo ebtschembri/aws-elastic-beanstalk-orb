@@ -55,6 +55,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+      - aws-elastic-beanstalk/setup
       - run:
           name: EB Create
           command: |
@@ -112,9 +113,11 @@ workflows:
               parameters:
                 compute: [python, base]
       - integreation-test-deploy-setup:
+          context: [orb-aws-eb-testing]
           requires:
               - integration-test-1
       - aws-elastic-beanstalk/deploy:
+          context: [orb-aws-eb-testing]
           requires:
                 - integreation-test-deploy-setup
       # Publish a semver version of the orb. relies on
