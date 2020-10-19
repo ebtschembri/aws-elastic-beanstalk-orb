@@ -60,6 +60,7 @@ jobs:
           name: EB Create
           command: |
             cd sample_app
+            eb init
             eb create eb-orb-testing
 
 workflows:
