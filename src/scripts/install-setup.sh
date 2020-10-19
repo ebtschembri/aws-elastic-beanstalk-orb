@@ -3,47 +3,48 @@ if [[ $EUID == 0 ]]; then export SUDO=""; else # Check if we are root
 fi
 
 SetupPython() {
-    # setups pyenv on a debian based system
-    # these are the system level deps for pyevn install, these are offically recommneded for install by AWS
-    $SUDO apt-get -qq update > /dev/null
-    $SUDO apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
+    # setups python3
     $SUDO apt-get -qq -y install python3-dev
-    SetupVirtualEnv
+    SetupPipx
 }
 
-SetupVirtualEnv() {
+SetupPipx() {
     if [ "$(which pip | tail -1)" ]; then
         echo "pip found"
     else
-        echo VirtualEnv"pip not found"
+        echo "pip not found"
         $SUDO apt-get update
         $SUDO apt-get install python3-setuptools
         curl https://bootstrap.pypa.io/get-pip.py | python3
     fi
-    pip install virtualenv
+    # install venv with system for pipx
+    # by using pipx we dont have to worry about activating the virtualenv before using eb
+    $SUDO apt-get -qq -y install python3-venv
+    pip install pipx
 }
 
 
 
 InstallEBCLI() {
-    cd /tmp || { echo "Not able to access /tmp"; return; }
-    git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
     if uname -a | grep Darwin > /dev/null 2>&1; then
+        cd /tmp || { echo "Not able to access /tmp"; return; }
+        git clone https://github.com/aws/aws-elastic-beanstalk-cli-setup.git
         brew install zlib openssl readline
         CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include" LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib" ./aws-elastic-beanstalk-cli-setup/scripts/bundled_installer >/dev/null 2>&1
         return $?
     elif uname -a | grep Linux > /dev/null 2>&1; then
+        $SUDO apt-get -qq update > /dev/null
+        # these are the system level deps for the ebcli
+        $SUDO apt-get -qq -y install build-essential zlib1g-dev libssl-dev libncurses-dev libffi-dev libsqlite3-dev libreadline-dev libbz2-dev
         if [ "$(which python3 | tail -1)" ]; then
             echo "Python3 env found"
-            SetupVirtualEnv
+            SetupPipx
         else
-            echo "Python3 env not found, setting up python 3.7.9 with pyenv"
+            echo "Python3 env not found, setting up python with apt"
             SetupPython
         fi
     fi
-        set +e; python3 aws-elastic-beanstalk-cli-setup/scripts/ebcli_installer.py
-        echo "Installed. Adding to path."
-        echo 'export PATH="/home/circleci/.ebcli-virtual-env/executables:$PATH"' >> "$BASH_ENV"
+        pipx install awsebcli
         echo "Complete"
 }
 
