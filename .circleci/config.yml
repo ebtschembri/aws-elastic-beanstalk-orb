@@ -61,7 +61,6 @@ jobs:
           command: |
             cd sample_app
             eb init sample_app -r $AWS_DEFAULT_REGION -p Node.js
-            eb create eb-orb-testing
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -119,6 +118,9 @@ workflows:
               - integration-test-1
       - aws-elastic-beanstalk/deploy:
           context: [orb-aws-eb-testing]
+          environment-name: eb-orb-testing
+          label: << pipeline.number >>
+          app-dir: ./sample_app
           requires:
                 - integreation-test-deploy-setup
       # Publish a semver version of the orb. relies on
