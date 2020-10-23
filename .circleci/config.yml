@@ -118,7 +118,7 @@ workflows:
               - integration-test-1
       - aws-elastic-beanstalk/deploy:
           context: [orb-aws-eb-testing]
-          environment-name: eb-orb-testing
+          environment-name: eb-orb-testing-1
           app-dir: ./sample_app
           requires:
                 - integreation-test-deploy-setup
