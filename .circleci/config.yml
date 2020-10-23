@@ -119,7 +119,6 @@ workflows:
       - aws-elastic-beanstalk/deploy:
           context: [orb-aws-eb-testing]
           environment-name: eb-orb-testing
-          label: "v<< pipeline.number >>"
           app-dir: ./sample_app
           requires:
                 - integreation-test-deploy-setup
