@@ -117,6 +117,10 @@ workflows:
           requires:
               - integration-test-1
       - aws-elastic-beanstalk/deploy:
+          post-steps:
+              - run:
+                  name: Test deployed app
+                  command: curl $(eb status | grep CNAME | cut -d ":" -f 2)
           context: [orb-aws-eb-testing]
           environment-name: eb-orb-testing-1
           label: test-label-<<pipeline.number>>

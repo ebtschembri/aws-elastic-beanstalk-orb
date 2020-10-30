@@ -4,9 +4,7 @@
 
 
 
-A starter template for orb projects. Build, test, and publish orbs automatically on CircleCI with [Orb-Tools](https://circleci.com/orbs/registry/orb/circleci/orb-tools).
-
-Additional READMEs are available in each directory.
+Easily install and utilize the AWS Elastic Beanstalk CLI on CircleCI. Easily any automatically test and deploy applications to Elastic Beanstalk
 
 
 
