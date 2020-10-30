@@ -1,0 +1,24 @@
+description: |
+  Easily deploy your application to Elastic Beanstalk with the provided deploy job.
+  This example shows how a Node.JS application may be tested and then deployed in a realistic CI environment, using both the Node orb and AWS Elastic Beanstalk orb.
+  This assumes the EB environment already exists and is awaiting deployments.
+
+usage:
+  version: 2.1
+  orbs:
+    node: circleci/node@4.1.0
+    eb: circleci/aws-elastic-beanstalk@1.0.0
+  workflows:
+    elastic-beanstalk-workflow:
+      jobs:
+        - node/test # Automatically run Node tests via the Node orb.
+        - eb/deploy: # If tests pass, and the commit is to the main branch, deploy to Elastic Beanstalk.
+            environment-name: my-app # It is assumed this environment has been created
+            label: version-<<pipeline.number>>
+            context: aws-creds # Pass in your AWS credential environment variables via a context or project level environment variables.
+            requires:
+              - node/test
+            filters:
+              branches:
+                only:
+                  - main

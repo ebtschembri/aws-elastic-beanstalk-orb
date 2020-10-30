@@ -1,12 +1,10 @@
-# Orb Project Template
+# AWS Elastic Beanstalk Orb
 
 [![CircleCI Build Status](https://circleci.com/gh/CircleCI-Public/aws-elastic-beanstalk-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/CircleCI-Public/aws-elastic-beanstalk-orb) [![CircleCI Orb Version](https://img.shields.io/badge/endpoint.svg?url=https://badges.circleci.io/orb/circleci/aws-elastic-beanstalk)](https://circleci.com/orbs/registry/orb/circleci/aws-elastic-beanstalk) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/CircleCI-Public/aws-elastic-beanstalk-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
 
 
-A starter template for orb projects. Build, test, and publish orbs automatically on CircleCI with [Orb-Tools](https://circleci.com/orbs/registry/orb/circleci/orb-tools).
-
-Additional READMEs are available in each directory.
+Easily install and utilize the AWS Elastic Beanstalk CLI on CircleCI. Easily any automatically test and deploy applications to Elastic Beanstalk.
 
 
 

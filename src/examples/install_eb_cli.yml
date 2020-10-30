@@ -1,0 +1,24 @@
+description: |
+  Easily install and utilize the AWS Elastic Beanstalk CLI within your CI pipelines.
+
+usage:
+  version: 2.1
+  orbs:
+    eb: circleci/aws-elastic-beanstalk@1.0.0
+  jobs:
+    eb-demo:
+      docker:
+        - image: cimg/base:stable
+      steps:
+        - checkout
+        - eb/setup # orb command to install and setup the EB CLI
+        - run:
+            name: You may now use the EB CLI within this job
+            command: |
+              eb create my-environment
+              eb deploy my-environment
+              eb status
+  workflows:
+    elastic-beanstalk-workflow:
+      jobs:
+        - eb-demo
