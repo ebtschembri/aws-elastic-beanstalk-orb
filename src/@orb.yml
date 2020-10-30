@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Deploy and scale web applications and services via AWS Elastic Beanstalk with CircleCI
+  Deploy and scale web applications and services via AWS Elastic Beanstalk with CircleCI.
 
 display:
   home_url: https://aws.amazon.com/elasticbeanstalk/

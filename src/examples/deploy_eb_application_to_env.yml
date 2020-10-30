@@ -15,7 +15,7 @@ usage:
         - eb/deploy: # If tests pass, and the commit is to the main branch, deploy to Elastic Beanstalk.
             environment-name: my-app # It is assumed this environment has been created
             label: version-<<pipeline.number>>
-            context: [aws-creds] # Pass in your AWS credential environment variables via a context or project level environment variables.
+            context: aws-creds # Pass in your AWS credential environment variables via a context or project level environment variables.
             requires:
               - node/test
             filters:
