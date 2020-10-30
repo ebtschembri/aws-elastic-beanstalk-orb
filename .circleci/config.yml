@@ -120,6 +120,7 @@ workflows:
           post-steps:
               - run:
                   name: Test deployed app
+                  working_directory: ./sample_app
                   command: curl $(eb status | grep CNAME | cut -d ":" -f 2)
           context: [orb-aws-eb-testing]
           environment-name: eb-orb-testing-1
