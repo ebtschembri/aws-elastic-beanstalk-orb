@@ -11,11 +11,11 @@ parameters:
     type: string
     default: "node.js"
   image:
-    description: Enter a custom docker image for this job. By default CircleCI's `cimg/base` image will be used.
+    description: Enter a custom docker image for this job. By default CircleCI's optimized `cimg/base` image will be used.
     type: string
     default: "cimg/base:stable"
   label:
-    description: pecify a label to use for the version that the EB CLI creates. If the label has already been used, the EB CLI redeploys the previous version with that label.
+    description: Specify a label to use for the version that the EB CLI creates. If the label has already been used, the EB CLI redeploys the previous version with that label.
     type: string
     default: ""
   description:
