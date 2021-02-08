@@ -15,7 +15,7 @@ SetupPipx() {
         echo "pip not found"
         $SUDO apt-get update
         $SUDO apt-get install python3-setuptools
-        curl https://bootstrap.pypa.io/3.5/get-pip.py | python3
+        curl https://bootstrap.pypa.io/get-pip.py | python3
     fi
     # install venv with system for pipx
     # by using pipx we dont have to worry about activating the virtualenv before using eb
